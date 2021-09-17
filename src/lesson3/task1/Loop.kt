@@ -254,7 +254,8 @@ fun hasDifferentDigits(n: Int): Boolean {
 fun sin(x: Double, eps: Double): Double {
     val cp = x - (x / (2 * PI)).toInt() * (2 * PI)
     return when {
-        cp >= 0 && cp < PI -> sqrt(1 - cos(cp, eps).pow(2))
+        (cp >= 0 && cp < PI) || (cp >= 2 * PI && cp < 3 * PI) || (cp >= -2 * PI && cp < -PI) ->
+            sqrt(1 - cos(cp, eps).pow(2))
         else -> -sqrt(1 - cos(cp, eps).pow(2))
     }
 }
