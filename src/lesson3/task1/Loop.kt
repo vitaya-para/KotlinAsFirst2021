@@ -278,7 +278,7 @@ fun nonUsualCos(x: Double, eps: Double): Double {
         }
         i++
     } while (memberOfNumber > eps)
-    return min(rez, 1.0)
+    return if (rez > 0.0) min(rez, 1.0) else max(rez, -1.0)
 }
 
 fun cos(x: Double, eps: Double): Double {
