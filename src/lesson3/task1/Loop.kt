@@ -2,10 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -281,7 +278,7 @@ fun nonUsualCos(x: Double, eps: Double): Double {
         }
         i++
     } while (memberOfNumber > eps)
-    return rez
+    return min(rez, 1.0)
 }
 
 fun cos(x: Double, eps: Double): Double {
