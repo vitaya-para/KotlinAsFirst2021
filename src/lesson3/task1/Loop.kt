@@ -219,7 +219,8 @@ fun getLen(n: Int): Int {
 
 fun isPalindrome(n: Int): Boolean {
     val len = getLen(n)
-    return (n / 10.0.pow(len - len / 2).toInt()) == revert((n % 10.0.pow(len / 2)).toInt())
+    val rez = revert((n % 10.0.pow(len / 2)).toInt())
+    return (n / 10.0.pow(len - len / 2).toInt()) == rez * 10.0.pow(len / 2 - getLen(rez)).toInt()
 }
 
 /**
@@ -251,7 +252,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
 fun sin(x: Double, eps: Double): Double {
-    val cp = if (x > 0) x - ((x / (2 * PI)).toInt()) * (2 * PI) else x + (x / (2 * PI)).toInt() * (2 * PI)
+    val cp = x - (x / (2 * PI)).toInt() * (2 * PI)
     return when {
         cp >= 0 && cp < PI -> sqrt(1 - cos(cp, eps).pow(2))
         else -> -sqrt(1 - cos(cp, eps).pow(2))
@@ -283,7 +284,7 @@ fun nonUsualCos(x: Double, eps: Double): Double {
 }
 
 fun cos(x: Double, eps: Double): Double {
-    val cp = if (x > 0) x - ((x / (2 * PI)).toInt()) * (2 * PI) else x + (x / (2 * PI)).toInt() * (2 * PI)
+    val cp = x - (x / (2 * PI)).toInt() * (2 * PI)
     return when (cp) {
         0.0 -> 1.0
         PI / 2.0, 3.0 * PI / 2.0 -> 0.0
@@ -306,17 +307,11 @@ fun squareSequenceDigit(n: Int): Int {
     var haveChars = 0
     var i = 1
     while (true) {
-        if (haveChars + getLen(i * i) > need) {
-            var rez = revert(i * i)
-            var j = need - haveChars
-            while (j > 0) {
-                rez /= 10
-                j--
-            }
-            return rez % 10
+        val len = getLen(i * i)
+        if (haveChars + len > need) {
+            return ((i * i) / 10.0.pow(len - (need - haveChars) - 1).toInt()) % 10
         }
-
-        haveChars += getLen(i * i)
+        haveChars += len
         i++
     }
 }
@@ -343,16 +338,10 @@ fun fibSequenceDigit(n: Int): Int {
         tmp = n1 + i
         n1 = i
         i = tmp
-
-        if (haveChars + getLen(i) > need) {
-            var rez = revert(i)
-            var j = need - haveChars
-            while (j > 0) {
-                rez /= 10
-                j--
-            }
-            return rez % 10
+        val len = getLen(i)
+        if (haveChars + len > need) {
+            return (i / 10.0.pow(len - (need - haveChars) - 1).toInt()) % 10
         }
-        haveChars += getLen(i)
+        haveChars += len
     }
 }
